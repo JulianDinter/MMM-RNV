@@ -8,7 +8,7 @@
  */
 
 Module.register('MMM-RNV',{
-	
+
 	defaults: {
 		apiKey: "",
 		units: config.units,
@@ -21,21 +21,20 @@ Module.register('MMM-RNV',{
 		initialLoadDelay: 0, // 0 seconds delay
 		retryDelay: 2500,
 
-		apiBase: 'http://rnv.the-agent-factory.de:8080/easygo2/api',		
+		apiBase: 'http://rnv.the-agent-factory.de:8080/easygo2/api',
 		requestURL: '/regions/rnv/modules/stationmonitor/element',
 		stationID: '',
-		
 		iconTable: {
 			"KOM": "fa fa-bus",
 			"STRAB": "fa fa-subway"
 		},
 	},
-	
+
 	// Define required scripts.
 	getScripts: function() {
 		return ["moment.js", "font-awesome.css"];
 	},
-	
+
 	getStyles: function() {
 		return ['MMM-RNV.css'];
 	},
@@ -66,13 +65,13 @@ Module.register('MMM-RNV',{
 			wrapper.className = "dimmed light small";
 			return wrapper;
 		}		
-		
+
 		if (!this.departures.length) {
 			wrapper.innerHTML = "No data";
 			wrapper.className = "dimmed light small";
 			return wrapper;
 		}
-		
+
 		var table = document.createElement("table");
 		table.id = "rnvtable";
 		table.className = "small thin light";
@@ -83,15 +82,18 @@ Module.register('MMM-RNV',{
 		timeHeader.innerHTML = "Abfahrt";
 		timeHeader.className = "rnvheader";
 		row.appendChild(timeHeader);
+
 		var lineHeader = document.createElement("th");
 		lineHeader.innerHTML = "Linie";
 		lineHeader.className = "rnvheader";
 		lineHeader.colSpan = 2;
 		row.appendChild(lineHeader);
+
 		var destinationHeader = document.createElement("th");
 		destinationHeader.innerHTML = "Fahrtrichtung";
 		destinationHeader.className = "rnvheader";
-		row.appendChild(destinationHeader);		
+		row.appendChild(destinationHeader);
+
 		table.appendChild(row);
 		
 		for (var i in this.departures) {
@@ -128,7 +130,7 @@ Module.register('MMM-RNV',{
 			row.appendChild(cellDirection);			
 		}
 		wrapper.appendChild(table);
-			
+
 		if (this.ticker) {
 			var marqueeTicker = document.createElement("marquee");
 			marqueeTicker.innerHTML = this.ticker;
@@ -136,7 +138,6 @@ Module.register('MMM-RNV',{
 			marqueeTicker.width = document.getElementsByClassName("module MMM-RNV MMM-RNV")[0].offsetWidth;
 			wrapper.appendChild(marqueeTicker);
 		}
-
 		return wrapper;
 	},
 
@@ -162,12 +163,12 @@ Module.register('MMM-RNV',{
 				statusNote: t.statusNote,
 				transportation: t.transportation,
 			});
-				
+
 		}
-		
+
 		return;
 	},
-	
+
  	socketNotificationReceived: function(notification, payload) {
     		if (notification === "STARTED") {
 				this.updateDom();

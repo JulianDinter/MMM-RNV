@@ -20,21 +20,20 @@ module.exports = NodeHelper.create({
 
 	getData: function() {
 		var self = this;
-		
+
 		var currentDate = moment().format('YYYY-MM-DD+hh:mm:ss');
 		var myUrl = this.config.apiBase + this.config.requestURL + '?hafasID=' + this.config.stationID + '&time=' + currentDate;
-				
+
 		request({
 			url: myUrl,
 			method: 'GET',
 			headers: { 'RNV_API_TOKEN': this.config.apiKey }
 		}, function (error, response, body) {
-			
+
 			if (!error && response.statusCode == 200) {
 				self.sendSocketNotification("DATA", body);
 			}
 		});
-
 		setTimeout(function() { self.getData(); }, this.config.refreshInterval);
 	},
 

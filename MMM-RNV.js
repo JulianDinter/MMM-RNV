@@ -21,9 +21,9 @@ Module.register('MMM-RNV',{
 		initialLoadDelay: 0, // 0 seconds delay
 		retryDelay: 2500,
 
-		apiBase: 'http://rnv.the-agent-factory.de:8080/easygo2/api',
-		requestURL: '/regions/rnv/modules/stationmonitor/element',
-		stationID: '2417',
+		apiBase: 'https://graphql-sandbox-dds.rnv-online.de',
+		header: 'RNV Monitor',
+		stationID: '',
 		iconTable: {
 			"KOM": "fa fa-bus",
 			"STRAB": "fa fa-subway"
@@ -44,6 +44,13 @@ Module.register('MMM-RNV',{
 		this.loaded = false;
 		this.sendSocketNotification('CONFIG', this.config);
 	},
+
+	getHeader: function() {
+		if (this.data.header === "") {
+			return this.defaults.header;
+		}
+		return this.data.header;
+	}
 
 	getDom: function() {
 		var wrapper = document.createElement("div");

@@ -7,6 +7,9 @@
  * MIT Licensed.
  */
 
+ import { client } from "./client";
+ import gql from "graphql-tag";
+
 const NodeHelper = require('node_helper');
 var request = require('request');
 var moment = require('moment');
@@ -35,6 +38,27 @@ module.exports = NodeHelper.create({
 			}
 		});
 		setTimeout(function() { self.getData(); }, this.config.refreshInterval);
+
+
+		client.query({
+			query: gql`
+				query {
+					stations(first: 3 lat: 49.483076 long: 8.468409 distance:0.5) {
+						totalCount
+						elements {
+							... on Station {
+								hafasID
+								globalID
+								longName
+							}
+						}
+					}
+				}
+			`,
+		}).then(result => console.log(result["data"]));
+
+
+
 	},
 
 	socketNotificationReceived: function(notification, payload) {

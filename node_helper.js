@@ -5,10 +5,10 @@
  *
  * By Stefan Krause http://yawns.de
  * MIT Licensed.
- */
+*/
 
- import { client } from "./client";
- import gql from "graphql-tag";
+import { client } from "./client";
+import gql from "graphql-tag";
 
 const NodeHelper = require('node_helper');
 var request = require('request');
